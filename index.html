@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Users</title>
+</head>
+<body>
+    <div class="container">
+        <button id="openAddUserFormButton" @click="showAddUserForm">Добавить нового пользователя</button>
+        <div class="blackBackground" @click.self="closeAddUserForm">
+            <form class="addUserForm" @submit.prevent>
+                <div class="personalInfoInputs shown">
+                    <input id="userNameInput" v-model="userNameInput" placeholder="Имя">
+                    <input id="userLoginInput" v-model="userLoginInput" placeholder="Логин">
+                    <input id="userEmailInput" v-model="userEmailInput" placeholder="Email">
+                    <input id="userPhoneNumberInput" v-model="userPhoneNumberInput" placeholder="Номер телефона">
+                    <input id="userSiteInput" v-model="userSiteInput" placeholder="Сайт">
+                </div>
+                <div class="addressInfoInputs">
+                    <input id="userCityInput" v-model="userCityInput" placeholder="Город">
+                    <input id="userStreetInput" v-model="userStreetInput" placeholder="Улица">
+                    <input id="userSuiteInput" v-model="userSuiteInput" placeholder="Дом">
+                    <input id="userZipcodeInput" v-model="userZipcodeInput" placeholder="Почтовый индекс">
+                    <span>
+                        <label><b>Геоданные:</b></label>
+                        <input id="userLatInput" v-model="userLatInput" placeholder="широта">
+                        <input id="userLngInput" v-model="userLngInput" placeholder="долгота">
+                    </span>
+                </div>
+                <div class="companyInfoInputs">
+                    <input id="userCompanyNameInput" v-model="userCompanyNameInput" placeholder="Название компании">
+                    <input id="userCompanyCatchPhraseInput" v-model="userCompanyCatchPhraseInput" placeholder="Девиз компании">
+                    <input id="userBusinessInput" v-model="userBusinessInput" placeholder="Бизнес">
+                </div>
+                <span id="movingButtons">
+                    <button disabled @click="previousInputPage">&#9668;</button>
+                    <button @click="nextInputPage">&#9658;</button>
+                </span>
+                <button id="addUserButton" disabled @click="addUser">Добавить</button>
+            </form>
+        </div>
+        <div class="searchSortBlock">
+            <span>
+                <label for="sortSelect">Сортировать по:</label>
+                <select id="sortSelect" v-model='selectedOption'>
+                    <option v-for='option in sortOptions' :value="option.value">{{option.name}}</option>
+                </select>
+            </span>
+            <span>
+                <label for="searchInput">Найти</label>
+                <input type="text" id='searchInput' v-model='searchValue' placeholder="Введите текст для поиска">
+            </span>
+            <span>
+                <label for="domainAmount">По домену сайта</label>
+                <select id="domainAmount" v-model="selectedFilterOption">
+                    <option v-for="option in filterOptions" :value="option.value">{{option.name}}</option>
+                </select>
+            </span>
+            <span>
+                <label for="reverseCheckbox">В обратном порядке</label>
+                <input type="checkbox" id="reverseCheckbox" :checked="reverseChecked" @change="changeCheckbox">
+            </span>
+        </div>
+        <div class="userCards">
+            <div class="userCard" v-for="user of reverseSortAndSearch" v-if="users.length!=0">
+                <div class="deleteUserButton" @click="deleteUser(user)">&Cross;</div>
+                <p class="userID">id: {{user.id}}</p>
+                <img src="./imgs/avatar.jfif" alt="userProfilePhoto" class="userProfilePhoto">
+                <p class="userName">{{user.name}}</p>
+                <p class="userLogin">Логин: {{user.username}}</p>
+                <p class="userEmail">Emai: {{user.email}}</p>
+                <p class="userPhoneNumber">Телефон: {{user.phone}}</p>
+                <p class="userSite">Сайт: <a :href="user.website">{{user.website}}</a></p>
+                <button class="detailInfoButton" @click="showDetailCard(user)">Подробно</button>
+            </div>
+            <div class="noUsersAlert" v-else>Нет пользователей</div>
+            <div class="blackBackground" @click.self="hideDetailCard">
+                <div class="detailUserCard" v-if="selectedUser!=''">
+                    <div class="personalInfo">
+                        <p class="userID">id: {{selectedUser.id}}</p>
+                        <img src="./imgs/avatar.jfif" alt="userProfilePhoto" class="userProfilePhoto">
+                        <span>
+                            <p class="userName">{{selectedUser.name}}</p>
+                            <p class="userLogin"><b>Логин:</b> {{selectedUser.username}}</p>
+                            <p class="userEmail"><b>Emai:</b> {{selectedUser.email}}</p>
+                            <p class="userPhoneNumber"><b>Телефон:</b> {{selectedUser.phone}}</p>
+                            <p class="userSite"><b>Сайт:</b> <a :href="selectedUser.website">{{selectedUser.website}}</a></p>
+                        </span>
+                    </div>
+                    <span>
+                        <div class="addressInfo">
+                            <p class="userAddress"><b>Адрес:</b> {{selectedUser.address.city}}, {{selectedUser.address.street}}, {{selectedUser.address.suite}}</p>
+                            <p class="userZipcode"><b>Почтовый индекс:</b> {{selectedUser.address.zipcode}}</p>
+                            <p class="userLatLng"><b>Геоданные:</b> широта: {{selectedUser.address.geo.lat}}; долгота: {{selectedUser.address.geo.lng}}</p>
+                        </div>
+                        <div class="companyInfo">
+                            <p class="userCompanyName"><b>Название компании:</b> {{selectedUser.company.name}}</p>
+                            <p class="userCompanyCatchPhrase"><b>Девиз компании:</b> {{selectedUser.company.catchPhrase}}</p>
+                            <p class="userBusiness"><b>Бизнес:</b> {{selectedUser.company.bs}}</p>
+                        </div>
+                    </span>
+                    <button class="closeDetailInfoButton" @click="hideDetailCard">Скрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://unpkg.com/vue@3"></script>
+<script src="./users.js"></script>
+</html>

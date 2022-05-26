@@ -1,0 +1,282 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.container{
+    width: 66%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button{
+    border: 1px solid rgb(212, 212, 212);
+    cursor: pointer;
+    border-radius: 3px;
+    background-color: white;
+    transition: 0.2s;
+}
+
+button:not(:disabled):hover{
+    background-color: rgb(212, 212, 212);
+    transition: 0.2s;
+}
+
+/* Блок с карточками пользователей - start */
+
+.userCards{
+    display: flex;
+    flex-wrap: wrap;
+    width: 1020px;
+    margin: 0 auto 0 auto;
+}
+
+.userCard{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 460px;
+    margin: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    justify-content: space-between;
+    border-radius: 5px;
+    position: relative;
+}
+
+.userID{
+    opacity: 0.5;
+    font-size: 10px;
+}
+
+.noUsersAlert{
+    width: 100%;
+    text-align: center;
+    color: gray;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.userProfilePhoto{
+    width: 80%;
+    align-self: center;
+}
+
+.userName{
+    font-weight: bold;
+    text-align: center;
+}
+
+.userSite>a{
+    color: rgb(94, 158, 255);
+    text-decoration: none;
+}
+
+.userSite>a:hover{
+    color: rgb(53, 89, 143);
+}
+
+.detailInfoButton{
+    width: 90px;
+    height: 20px;
+    align-self: center;
+    margin: 10px 0 10px 0;
+}
+
+.userCard .deleteUserButton{
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    border-radius: 4px;
+    z-index: 1;
+}
+
+.userCard .deleteUserButton:hover{
+    background-color: rgba(255, 93, 93, 0.596);
+}
+
+/* Блок с карточками пользователей - end */
+
+/* Карта с детальной информацией - start */
+
+.blackBackground{
+    display: none;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.detailUserCard{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    flex-wrap: wrap;
+    width: 600px;
+    height: 480px;
+    border-radius: 10px;
+    padding: 25px;
+}
+
+.detailUserCard .userProfilePhoto{
+    width: 35%;
+    align-self: flex-start;
+}
+
+.detailUserCard .userName{
+    text-align: left;
+}
+
+.closeDetailInfoButton{
+    width: 90px;
+    height: 20px;
+    align-self: center;
+    margin: 10px 0 10px 0;
+}
+
+.detailUserCard .personalInfo{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.detailUserCard .personalInfo .userID{
+    width: 100%;
+}
+
+.detailUserCard .personalInfo span{
+    margin-left: 50px;
+}
+
+.detailUserCard .personalInfo span p:first-child{
+    font-size: 24px;
+}
+
+.detailUserCard .personalInfo span p:not(:first-child){
+    margin-top: 10px;
+}
+
+.detailUserCard span div{
+    margin-top: 20px;
+}
+
+.detailUserCard span div p:not(:first-child) {
+    margin-top: 5px;
+}
+
+.closeDetailInfoButton{
+    margin-top: 25px;
+}
+
+/* Карта с детальной информацией - end */
+
+/* Форма добавления данных - start */
+
+#openAddUserFormButton{
+    /* transform: translateX(-50%);
+    margin: 50px 0 50px 50%; */
+    margin: 50px 0 50px 0;
+    padding: 8px;
+}
+
+.addUserForm {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    padding: 40px;
+}
+
+.addUserForm div{
+    display: none;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.addUserForm .shown{
+    display: flex;
+}
+
+.addressInfoInputs span{
+    display: flex;
+    flex-direction: column;
+}
+
+.addressInfoInputs span label{
+    margin-bottom: 10px;
+}
+
+.addUserForm input{
+    font-size: 18px;
+    width: 300px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid black;
+    margin-bottom: 20px;
+}
+
+#movingButtons{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+#movingButtons button{
+    padding: 2px 5px 2px 5px;
+    font-size: 16px;
+    text-align: center;
+    outline: none;
+}
+
+.addUserForm>button{
+    padding: 5px 10px 5px 10px;
+}
+
+.requiredInput{
+    border-color: red !important;
+}
+
+/* Форма добавления данных - end */
+
+
+/* Блок с фильтрами и сортировкой - start */
+
+.searchSortBlock{
+    display: flex;
+    flex-direction: column;
+    margin:20px 0 50px 0;
+    justify-content: space-between;
+    height: 120px;
+}
+
+.searchSortBlock span{
+    display: flex;
+    align-items: center;
+}
+
+.searchSortBlock span label{
+    margin-right: 5px;
+}
+
+#reverseCheckbox{
+    cursor: pointer;
+}
+
+/* Блок с фильтрами и сортировкой - end */
